@@ -502,10 +502,16 @@ class PanasonicSmartHome(object):
                                 parameters["Off"] = 0
                     elif "range" in cmd["ParameterType"]:
                         parameters_list = cmd["Parameters"]
+                        max = 0
+                        min = 0
                         for para in parameters_list:
                             if "Min" == para[0]:
                                 min = para[1] or 0
                             if "Max" == para[0]:
+                                max = para[1] or 1
+                            if "\u901a\u5e38" == para[0]:
+                                min = para[1] or 0
+                            if "\u6a21\u5f0f" == para[0]:
                                 max = para[1] or 1
                         if max > 39:
                             parameters[str(min)] = min

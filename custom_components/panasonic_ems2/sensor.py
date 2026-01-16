@@ -132,6 +132,11 @@ class PanasonicSensor(PanasonicBaseEntity, SensorEntity):
                 if value < -1 or value > 50:
                     return None
         if device_type == DEVICE_TYPE_FRIDGE:
+            if isinstance(value, str):
+                if "-" in value:
+                    value = value.replace("-", "")
+                    value = - float(value) / 1000
+                value = float(value)
             if value > 60000:
                 value = value - 65535
             elif value > 30000:
