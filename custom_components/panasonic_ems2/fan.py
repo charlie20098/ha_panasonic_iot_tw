@@ -13,8 +13,10 @@ from .core.const import (
     DATA_CLIENT,
     DATA_COORDINATOR,
     DEVICE_TYPE_AIRPURIFIER,
+    DEVICE_TYPE_DRYER,
     DEVICE_TYPE_FAN,
     DEVICE_TYPE_WASHING_MACHINE,
+    DRYER_FAN_SPEED,
     FAN_OPERATING_MODE,
     FAN_OSCILLATE,
     FAN_POWER,
@@ -32,6 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 PANASONIC_FAN_TYPE = [
     DEVICE_TYPE_AIRPURIFIER,
     DEVICE_TYPE_FAN,
+    DEVICE_TYPE_DRYER,
 #    DEVICE_TYPE_WASHING_MACHINE
 ]
 
@@ -88,6 +91,8 @@ class PanasonicFan(PanasonicBaseEntity, FanEntity):
             self._attr_speed_count = 15
         if device_type == DEVICE_TYPE_AIRPURIFIER:
             self._attr_speed_count = 6
+        if device_type == DEVICE_TYPE_DRYER:
+            self._attr_speed_count = 3
         self._device_type = device_type
         self._state = None
 
@@ -144,6 +149,8 @@ class PanasonicFan(PanasonicBaseEntity, FanEntity):
             if self._device_type == DEVICE_TYPE_AIRPURIFIER:
                 value = int(
                     status.get(AIRPURIFIER_OPERATING_MODE) * self.percentage_step)
+            if self._device_type == DEVICE_TYPE_DRYER:
+                value = int(status.get(DRYER_FAN_SPEED))
             return value
         return value
 
@@ -232,6 +239,8 @@ class PanasonicFan(PanasonicBaseEntity, FanEntity):
             if self._device_type == DEVICE_TYPE_AIRPURIFIER:
                 await self.client.set_device(
                     gwid, device_id, AIRPURIFIER_OPERATING_MODE, percentage / self.percentage_step)
+            if self._device_type == DEVICE_TYPE_DRYER:
+                await self.client.set_device(gwid, device_id, DRYER_FAN_SPEED, int(percentage / 50))
         await self.client.update_device(gwid, device_id)
         self.async_write_ha_state()
 

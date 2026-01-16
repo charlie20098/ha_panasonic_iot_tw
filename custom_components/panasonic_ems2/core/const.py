@@ -104,6 +104,7 @@ DEVICE_TYPE_CLIMATE = 1
 DEVICE_TYPE_FRIDGE = 2
 DEVICE_TYPE_WASHING_MACHINE = 3
 DEVICE_TYPE_DEHUMIDIFIER = 4
+DEVICE_TYPE_DRYER = 6
 DEVICE_TYPE_AIRPURIFIER = 8
 DEVICE_TYPE_ERV = 14
 DEVICE_TYPE_FAN = 15
@@ -290,6 +291,24 @@ DEHUMIDIFIER_JHW_COMMANDS = [
     DEHUMIDIFIER_58,
 #    DEHUMIDIFIER_59
 ]
+
+DRYER_POWER = "0x00"
+DRYER_OPERATING_STATUS = "0x01"
+DRYER_HEATING_STATUS = "0x02"
+DRYER_OPERATING_MODE = "0x03"
+DRYER_OPERATING_TIME = "0x04"
+DRYER_REMAINING_TIME = "0x05"
+DRYER_STATUS = "0x06"
+DRYER_DISPLAY = "0x07"
+DRYER_FAN_SPEED = "0x08"
+DRYER_TEMPERATURE = "0x09"
+DRYER_ERROR_CODE = "0x0A"
+DRYER_ENERGY = "0x0F"
+DRYER_APPOINTMENT_REMAINING_TIME = "0x15"
+DRYER_PROGRAM_1 = "0x34"
+DRYER_OPERATING_STATUS_NEW = "0x50"
+DRYER_OPERATING_MODE_NEW = "0x55"
+DRYER_PROGRAM_2 = "0x64"
 
 ERV_POWER = "0x00"
 ERV_OPERATING_MODE = "0x01"
@@ -539,6 +558,20 @@ COMMANDS_TYPE= {
         DEHUMIDIFIER_50,
         DEHUMIDIFIER_TIMER_ON
     ],
+    str(DEVICE_TYPE_DRYER): [
+        DRYER_POWER,
+        DRYER_OPERATING_STATUS,
+        DRYER_TEMPERATURE,
+        DRYER_APPOINTMENT_REMAINING_TIME,
+        DRYER_HEATING_STATUS,
+        DRYER_OPERATING_MODE,
+        DRYER_OPERATING_TIME,
+        DRYER_REMAINING_TIME,
+        DRYER_STATUS,
+        DRYER_FAN_SPEED,
+        DRYER_OPERATING_STATUS_NEW,
+        DRYER_OPERATING_MODE_NEW
+    ],
     str(DEVICE_TYPE_ERV): [
         ERV_POWER,
         ERV_OPERATING_MODE,
@@ -599,6 +632,8 @@ EXTRA_COMMANDS = {
     },
     str(DEVICE_TYPE_ERV): {
     },
+    str(DEVICE_TYPE_DRYER): {
+    },
     str(DEVICE_TYPE_FRIDGE): {
         "XGS": FRIDGE_XGS_COMMANDS,
         "F655": [FRIDGE_ERROR_CODE_JP],
@@ -631,6 +666,8 @@ EXCESS_COMMANDS = {
     str(DEVICE_TYPE_DEHUMIDIFIER): {
     },
     str(DEVICE_TYPE_ERV): {
+    },
+    str(DEVICE_TYPE_DRYER): {
     },
     str(DEVICE_TYPE_FRIDGE): {
     },
@@ -680,8 +717,11 @@ SET_COMMAND_TYPE = {
         DEHUMIDIFIER_BUZZER: 152,
         DEHUMIDIFIER_TIMER_ON: 213
     },
-    str(DEVICE_TYPE_ERV): {
+    str(DEVICE_TYPE_DRYER): {
         ERV_POWER: 0
+    },
+    str(DEVICE_TYPE_ERV): {
+        DRYER_POWER: 0
     },
     str(DEVICE_TYPE_LIGHT): {
         LIGHT_POWER: 0,
@@ -771,6 +811,20 @@ DEHUMIDIFIER_BINARY_SENSORS: tuple[PanasonicBinarySensorDescription, ...] = (
         key=DEHUMIDIFIER_WATER_TANK_STATUS,
         name="Water Tank",
         icon='mdi:cup-water'
+    )
+)
+
+DRYER_BINARY_SENSORS: tuple[PanasonicBinarySensorDescription, ...] = (
+    PanasonicBinarySensorDescription(
+        key=ENTITY_UPDATE,
+        name="Firmware Update",
+        icon='mdi:package-up',
+        device_class=BinarySensorDeviceClass.UPDATE
+    ),
+    PanasonicBinarySensorDescription(
+        key=ENTITY_EMPTY,
+        name="Empty",
+        icon='mdi:cog'
     )
 )
 
@@ -906,6 +960,20 @@ DEHUMIDIFIER_NUMBERS: tuple[PanasonicNumberDescription, ...] = (
         native_unit_of_measurement=UnitOfTime.HOURS,
         entity_category=EntityCategory.CONFIG,
         icon='mdi:timer-cog',
+        native_min_value=0,
+        native_max_value=12,
+        native_step=1,
+        entity_registry_enabled_default=False
+    )
+)
+
+DRYER_NUMBERS: tuple[PanasonicNumberDescription, ...] = (
+    PanasonicNumberDescription(
+        key=DRYER_OPERATING_TIME,
+        name="Operating Time",
+        native_unit_of_measurement=UnitOfTime.HOURS,
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:timer-cog-outline',
         native_min_value=0,
         native_max_value=12,
         native_step=1,
@@ -1101,6 +1169,55 @@ DEHUMIDIFIER_SELECTS: tuple[PanasonicSelectDescription, ...] = (
         icon='mdi:fan-speed-1',
         options=["Fixed", "Down", "Up", "Both", "Side"],
         options_value=["0", "1", "2", "3", "4"]
+    )
+)
+
+DRYER_SELECTS: tuple[PanasonicSelectDescription, ...] = (
+    PanasonicSelectDescription(
+        key=DRYER_OPERATING_STATUS,
+        name="Operating Status",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:cog',
+        options=["Stopping", "Pause", "Working"],
+        options_value=["0", "1", "2"]
+    ),
+    PanasonicSelectDescription(
+        key=DRYER_HEATING_STATUS,
+        name="Heating Status",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:cog',
+        options=["Weak", "Strong"],
+        options_value=["0", "1"]
+    ),
+    PanasonicSelectDescription(
+        key=DRYER_OPERATING_MODE,
+        name="Operating Mode",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:hanger',
+        options=["Standard", "Thick Clothes", "Long Time", "Short Time", "Reserved"],
+        options_value=["0", "1", "2", "3", "4"]
+    ),
+    PanasonicSelectDescription(
+        key=DRYER_OPERATING_MODE_NEW,
+        name="Operating Mode",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:hanger'
+    ),
+    PanasonicSelectDescription(
+        key=DRYER_STATUS,
+        name="Drying Status",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:cog',
+        options=["Fan Only", "Drying"],
+        options_value=["0", "1"]
+    ),
+    PanasonicSelectDescription(
+        key=DRYER_FAN_SPEED,
+        name="Fan Speed",
+        entity_category=EntityCategory.CONFIG,
+        icon='mdi:fan',
+        options=["Low", "Middle", "High"],
+        options_value=["0", "1", "2", "3"],
     )
 )
 
@@ -1305,6 +1422,24 @@ DEHUMIDIFIER_SENSORS: tuple[PanasonicSensorDescription, ...] = (
     ),
     PanasonicSensorDescription(
         key=DEHUMIDIFIER_ERROR_CODE,
+        name="Error Code",
+        icon="mdi:alert-circle"
+    )
+)
+
+DRYER_SENSORS: tuple[PanasonicSensorDescription, ...] = (
+    PanasonicSensorDescription(
+        key=DRYER_OPERATING_STATUS_NEW,
+        name="Operating Status",
+        icon="mdi:tumble-dryer"
+    ),
+    PanasonicSensorDescription(
+        key=DRYER_APPOINTMENT_REMAINING_TIME,
+        name="Remaining Time",
+        icon="mdi:timer-outline"
+    ),
+    PanasonicSensorDescription(
+        key=DRYER_ERROR_CODE,
         name="Error Code",
         icon="mdi:alert-circle"
     )
@@ -1720,6 +1855,7 @@ SAA_BINARY_SENSORS = {
     DEVICE_TYPE_AIRPURIFIER: AIRPURIFIER_BINARY_SENSORS,
     DEVICE_TYPE_CLIMATE: CLIMATE_BINARY_SENSORS,
     DEVICE_TYPE_DEHUMIDIFIER: DEHUMIDIFIER_BINARY_SENSORS,
+    DEVICE_TYPE_DRYER: DRYER_BINARY_SENSORS,
     DEVICE_TYPE_ERV: ERV_BINARY_SENSORS,
     DEVICE_TYPE_FRIDGE: FRIDGE_BINARY_SENSORS,
     DEVICE_TYPE_LIGHT: LIGHT_BINARY_SENSORS,
@@ -1729,6 +1865,7 @@ SAA_BINARY_SENSORS = {
 SAA_NUMBERS = {
     DEVICE_TYPE_CLIMATE: CLIMATE_NUMBERS,
     DEVICE_TYPE_DEHUMIDIFIER: DEHUMIDIFIER_NUMBERS,
+    DEVICE_TYPE_DRYER: DRYER_NUMBERS,
     DEVICE_TYPE_ERV: ERV_NUMBERS,
     DEVICE_TYPE_LIGHT: LIGHT_NUMBERS
 }
@@ -1737,6 +1874,7 @@ SAA_SELECTS = {
     DEVICE_TYPE_AIRPURIFIER: AIRPURIFIER_SELECTS,
     DEVICE_TYPE_CLIMATE: CLIMATE_SELECTS,
     DEVICE_TYPE_DEHUMIDIFIER: DEHUMIDIFIER_SELECTS,
+    DEVICE_TYPE_DRYER: DRYER_SELECTS,
     DEVICE_TYPE_ERV: ERV_SELECTS,
     DEVICE_TYPE_FRIDGE: FRIDGE_SELECTS
 }
@@ -1745,6 +1883,7 @@ SAA_SENSORS = {
     DEVICE_TYPE_AIRPURIFIER: AIRPURIFIER_SENSORS,
     DEVICE_TYPE_CLIMATE: CLIMATE_SENSORS,
     DEVICE_TYPE_DEHUMIDIFIER: DEHUMIDIFIER_SENSORS,
+    DEVICE_TYPE_DRYER: DRYER_SENSORS,
     DEVICE_TYPE_ERV: ERV_SENSORS,
     DEVICE_TYPE_FRIDGE: FRIDGE_SENSORS,
     DEVICE_TYPE_LIGHT: LIGHT_SENSORS
