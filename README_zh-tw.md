@@ -1,6 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tsunglung/panasonic_ems2?style=for-the-badge)
-[![GitHub license](https://img.shields.io/github/license/tsunglung/panasonic_ems2?style=for-the-badge)](https://github.com/osk2/panasonic_smart_app/blob/master/LICENSE)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/charlie20098/ha_panasonic_iot_tw?style=for-the-badge)
+[![GitHub license](https://img.shields.io/github/license/charlie20098/ha_panasonic_iot_tw?style=for-the-badge)](https://github.com/osk2/panasonic_smart_app/blob/master/LICENSE)
 
 [English](README.md) | [繁體中文](README_zh-tw.md)
 
@@ -19,11 +19,11 @@ Home Assistant 的 Panasonic IoT TW [Android](https://play.google.com/store/apps
 
 # 安裝
 
-你可以用 [HACS](https://hacs.xyz/) 來安裝這個整合。 步驟如下 custom repo: HACS > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `tsunglung/panasonic_ems2` > Category: Integration
+你可以用 [HACS](https://hacs.xyz/) 來安裝這個整合。 步驟如下 custom repo: HACS > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `charlie20098/ha_panasonic_iot_tw` > Category: Integration
 
 # 手動安裝
 
-手動複製 `panasonic_ems2` 資料夾到你的 config 資料夾的  `custom_components` 目錄下。
+手動複製 `panasonic_iot_tw` 資料夾到你的 config 資料夾的  `custom_components` 目錄下。
 
 然後重新啟動 Home Assistant.
 
@@ -31,9 +31,9 @@ Home Assistant 的 Panasonic IoT TW [Android](https://play.google.com/store/apps
 
 **請使用 Home Assistant 整合設定**
 
-1. 從 GUI. 設定 > 整合 > 新增 整合 > Panasonic Smart IoT
-   1. 如果 `Panasonic Smart IoT` 沒有出現在清單裡，請 重新整理 (REFRESH) 網頁。
-   2. 如果 `Panasonic Smart IoT` 還是沒有出現在清單裡，請清除瀏覽器的快取 (Cache)。
+1. 從 GUI. 設定 > 整合 > 新增 整合 > Panasonic IoT TW
+   1. 如果 `Panasonic IoT TW` 沒有出現在清單裡，請 重新整理 (REFRESH) 網頁。
+   2. 如果 `Panasonic IoT TW` 還是沒有出現在清單裡，請清除瀏覽器的快取 (Cache)。
 2. 輸入登入資訊 ([Panasonic Cloud](https://club.panasonic.tw/) 的電子郵件及密碼)
 3. 開始使用。
 
@@ -45,11 +45,11 @@ Home Assistant 的 Panasonic IoT TW [Android](https://play.google.com/store/apps
 **方法**
 
 1. 下載並安裝 [Python](https://www.python.org/downloads/)
-2. 下載腳本 [panasonic_ems2.py](https://github.com/tsunglung/panasonic_ems2/raw/master/scripts/panasonic_ems2.py) 到你的 Windows 或 MacOS
+2. 下載腳本 [panasonic_iot_tw.py](https://github.com/charlie20098/ha_panasonic_iot_tw/raw/master/scripts/panasonic_iot_tw.py) 到你的 Windows 或 MacOS
 3. 找到下載的腳本, 並使用 Windows 的 CMD 或是  macOS 的 Terminal, 切換目錄到下載的路徑 "cd [your Download Path]"
 4. 執行下載的指令並登入你的 Panasonic Cloud 帳號
 ```
-python panasonic_ems2.py
+python panasonic_iot_tw.py
 ```
 5. 如果登入成功，會有二個檔案產生. 你可以在  "panasonic_devices.json" 找到家電型號資訊，接著把型號資訊以及 "panasonic_commands.json" 提供給我 或是發到 issue.
 

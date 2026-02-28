@@ -1,0 +1,12 @@
+{
+  "domain": "panasonic_iot_tw",
+  "name": "Panasonic IoT TW",
+  "config_flow": true,
+  "version": "0.0.1",
+  "iot_class": "cloud_polling",
+  "documentation": "https://github.com/charlie20098/ha_panasonic_iot_tw",
+  "issue_tracker": "https://github.com/charlie20098/ha_panasonic_iot_tw/issues",
+  "codeowners": [
+    "@charlie20098"
+  ]
+}

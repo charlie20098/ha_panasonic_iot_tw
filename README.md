@@ -1,6 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tsunglung/panasonic_ems2?style=for-the-badge)
-[![GitHub license](https://img.shields.io/github/license/tsunglung/panasonic_ems2?style=for-the-badge)](https://github.com/osk2/panasonic_smart_app/blob/master/LICENSE)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/charlie20098/ha_panasonic_iot_tw?style=for-the-badge)
+[![GitHub license](https://img.shields.io/github/license/charlie20098/ha_panasonic_iot_tw?style=for-the-badge)](https://github.com/osk2/panasonic_smart_app/blob/master/LICENSE)
 
 
 [繁體中文](README_zh-tw.md) | [English](README.md)
@@ -22,19 +22,19 @@ This project is forked from [Osk2's](https://github.com/osk2) [panasonic_smart_a
 
 # Installation
 
-You can install component with [HACS](https://hacs.xyz/) custom repo: HACS > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `tsunglung/panasonic_ems2` > Category: Integration
+You can install component with [HACS](https://hacs.xyz/) custom repo: HACS > Integrations > 3 dots (upper top corner) > Custom repositories > URL: `charlie20098/ha_panasonic_iot_tw` > Category: Integration
 
 Then restart Home Assistant.
 
 ### Manually Installation
 
-Copy `panasonic_ems2` folder of custom_components in this repository to `custom_components` folder in your config folder.
+Copy `panasonic_iot_tw` folder of custom_components in this repository to `custom_components` folder in your config folder.
 
 # Configuration
 
 **Please use the config flow of Home Assistant**
 
-1. With GUI. Configuration > Integration > Add Integration > `Panasonic Smart IoT`
+1. With GUI. Configuration > Integration > Add Integration > `Panasonic IoT TW`
    1. If the integration didn't show up in the list please REFRESH the page
    2. If the integration is still not in the list, you need to clear the browser cache.
 2. Enter the Login info (email and password of [Panasonic Cloud](https://club.panasonic.tw/))
@@ -48,12 +48,12 @@ You can help to improve this integration via send the information of your applia
 **Method**
 
 1. Download and install [Python](https://www.python.org/downloads/)
-2. Download the script [panasonic_ems2.py](https://github.com/tsunglung/panasonic_ems2/raw/master/scripts/panasonic_ems2.py) to your PC or MacOS
+2. Download the script [panasonic_iot_tw.py](https://github.com/charlie20098/ha_panasonic_iot_tw/raw/master/scripts/panasonic_iot_tw.py) to your PC or MacOS
 3. Find the downloaded script, use CMD of Windows or Terminal of MacOS, "cd [your Download Path]"
 4. Run the following command and login your Panasonic Cloud Account.
 ```
 pip install request
-python panasonic_ems2.py
+python panasonic_iot_tw.py
 ```
 5. There are two files generated. You can find the model info in "panasonic_devices.json" then send the model info and the "panasonic_commands.json" to me or crate a issue.
 

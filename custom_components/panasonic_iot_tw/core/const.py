@@ -51,7 +51,7 @@ from homeassistant.const import (
     UnitOfVolume
 )
 
-DOMAIN = "panasonic_ems2"
+DOMAIN = "panasonic_iot_tw"
 
 DOMAINS = [
     "binary_sensor",

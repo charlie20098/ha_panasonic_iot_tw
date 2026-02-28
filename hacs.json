@@ -1,8 +1,8 @@
 {
-  "name": "Panasonic Smart IoT",
+  "name": "Panasonic IoT TW",
   "homeassistant": "2023.11.0",
   "render_readme": true,
-  "domain": "panasonic_ems2",
-  "documentation": "https://github.com/tsunglung/panasonic_ems2",
-  "issue_tracker": "https://github.com/tsunglung/panasonic_ems2/issues"
+  "domain": "panasonic_iot_tw",
+  "documentation": "https://github.com/charlie20098/ha_panasonic_iot_tw",
+  "issue_tracker": "https://github.com/charlie20098/ha_panasonic_iot_tw/issues"
 }
