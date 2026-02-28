@@ -192,11 +192,6 @@ class PanasonicClimate(PanasonicBaseEntity, ClimateEntity):
                         if value == value2:
                             hvac_modes.append(mode)
                             break
-
-        # Remove Auto mode so HomeKit/Siri defaults to Cool on "turn on"
-        if HVACMode.AUTO in hvac_modes:
-            hvac_modes.remove(HVACMode.AUTO)
-
         return hvac_modes
 
     async def async_set_hvac_mode(self, hvac_mode) -> None:
