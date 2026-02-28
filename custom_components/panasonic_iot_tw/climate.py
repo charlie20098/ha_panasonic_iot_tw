@@ -118,8 +118,7 @@ class PanasonicClimate(PanasonicBaseEntity, ClimateEntity):
         preset_mode = False
         if self._device_type == DEVICE_TYPE_CLIMATE:
             if (status.get(CLIMATE_SWING_VERTICAL_LEVEL, None) is not None and
-                (status.get(CLIMATE_SWING_HORIZONTAL_LEVEL, None) is not None) and
-                self.client.get_range(self.device_gwid, CLIMATE_OPERATING_MODE)):
+                (status.get(CLIMATE_SWING_HORIZONTAL_LEVEL, None) is not None)):
                 features |= ClimateEntityFeature.SWING_MODE
 
             if status.get(CLIMATE_FAN_SPEED, None) is not None:
