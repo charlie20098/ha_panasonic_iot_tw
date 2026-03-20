@@ -32,7 +32,9 @@ from .const import (
     EXCESS_COMMANDS,
     MODEL_JP_TYPES,
     CLIMATE_PM25,
+    DEVICE_TYPE_CLIMATE,
     DEVICE_TYPE_DEHUMIDIFIER,
+    DEVICE_TYPE_ERV,
     DEVICE_TYPE_FRIDGE,
     DEVICE_TYPE_LIGHT,
     DEVICE_TYPE_WASHING_MACHINE,
@@ -764,6 +766,9 @@ class PanasonicSmartHome(object):
                 continue
 
             if device_type == str(DEVICE_TYPE_LIGHT):
+                gwid_status[gwid] = "force update"
+
+            if device_type in [str(DEVICE_TYPE_CLIMATE), str(DEVICE_TYPE_ERV)]:
                 gwid_status[gwid] = "force update"
 
             if len(gwid_status[gwid]) < 1:
